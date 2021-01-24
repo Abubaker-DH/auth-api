@@ -4,6 +4,7 @@ const app = express();
 
 // connect to Database
 require("./startup/db")();
+require("./startup/routes")(app);
 
 const PORT = process.env.PORT || 5000;
 

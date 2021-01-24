@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-function validateUser(user) {
+function validateRegister(user) {
   const schema = {
     name: Joi.string().required(),
     email: Joi.string().required().email(),
@@ -29,5 +29,30 @@ function validateUser(user) {
   };
   return Joi.validate(user, schema);
 }
+
+function validateLogin(user) {
+  const schema = {
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  };
+  return Joi.validate(user, schema);
+}
+
+function validateReset(user) {
+  const schema = {
+    password: Joi.string().required(),
+  };
+  return Joi.validate(user, schema);
+}
+
+function validateForgote(user) {
+  const schema = {
+    email: Joi.string().required().email(),
+  };
+  return Joi.validate(user, schema);
+}
 module.exports.User = mongoose.model("User", userSchema);
-module.exports.validateUser = validateUser;
+module.exports.validateRegister = validateRegister;
+module.exports.validateLogin = validateLogin;
+module.exports.validateReset = validateReset;
+module.exports.validateForgote = validateForgote;

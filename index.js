@@ -1,4 +1,3 @@
-require("dotenv").config({ path: "./config.env" });
 require("express-async-errors");
 const winston = require("winston");
 

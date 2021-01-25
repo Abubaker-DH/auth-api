@@ -98,7 +98,7 @@ router.post("/forgotpassword", async (req, res, next) => {
 
   user.resetToken = resetToken;
   user.resetTokenExpiration = Date.now() + 60 * (60 * 1000);
-  user.save();
+  await user.save();
 
   const resetLink = `"http://localhost:5000/api/auth/resetpassword/${resetToken}"`;
   const text = `

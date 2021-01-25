@@ -1,15 +1,15 @@
 require("dotenv").config({ path: "./config.env" });
+require("express-async-errors");
+const winston = require("winston");
+
 const express = require("express");
 const app = express();
 
-// connect to Database
+require("./startup/logging");
 require("./startup/db")();
+require("./startup/prod")(app);
 require("./startup/routes")(app);
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () =>
-  console.log(`listening on port ${PORT} ...`)
-);
-
-module.exports = server;
+app.listen(PORT, () => winston.info(`Listening on PORT ${PORT}...`));

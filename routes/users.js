@@ -53,7 +53,6 @@ router.post("/login", async (req, res, next) => {
   // generate token
   const token = user.generateAuthToken();
 
-  // res.send(lodash.pick(user, ["_id", "name", "email"]));
   res.send(token);
 });
 

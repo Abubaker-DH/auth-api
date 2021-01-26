@@ -8,23 +8,23 @@ require("express-async-errors");
 module.exports = function () {
   // when we have an exception in the node process but no ware
   // we have handle that exception using Catch block  (handle node exception)
-  winston.handleExceptions(
+  winston.exceptions.handle(
     new winston.transports.File({ filename: "uncaughtExceptions.log" })
   );
 
   // when we call then() and don't call catch()
   // or don't use try/catch when using async / await
   // (handle promise exception)
-  process.on("unhandledRejection", (ex) => {
-    // becouse handleException() method don't log unhandledRejection errors
-    // so we theow the ex to handleEception so will log it in the file
-    throw ex;
-  });
+  winston.rejections.handle(
+    new winston.transports.File({ filename: "rejectionExceptions.log" })
+  );
 
   // this is a default logger
-  winston.add(winston.transports.File, { filename: "logfile.log" });
-  winston.add(winston.transports.MongoDB, {
-    db: process.env.MONGO_URI,
-    level: "info", // we specifiy the level of error
-  });
+  winston.add(new winston.transports.File({ filename: "logfile.log" }));
+  winston.add(
+    new winston.transports.MongoDB({
+      db: process.env.MONGO_URI,
+      level: "info", // we specifiy the level of error
+    })
+  );
 };
